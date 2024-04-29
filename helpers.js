@@ -1,16 +1,18 @@
 
-export function getUserFromLocalStorage(user) {
-  try {
-    return JSON.parse(window.localStorage.getItem("user"));
-  } catch (error) {
-    return null;
-  }
-}
+export const knownUser = {
+  getUserFromLocalStorage(user) {
+    try {
+      return JSON.parse(window.localStorage.getItem("user"));
+    } catch (error) {
+      return null;
+    }
+  },
 
-export function saveUserToLocalStorage(user) {
-  window.localStorage.setItem("user", JSON.stringify(user));
-}
+  saveUserToLocalStorage(user) {
+    window.localStorage.setItem("user", JSON.stringify(user));
+  },
 
-export function removeUserFromLocalStorage(user) {
-  window.localStorage.removeItem("user");
+  removeUserFromLocalStorage(user) {
+    window.localStorage.removeItem("user");
+  },
 }
