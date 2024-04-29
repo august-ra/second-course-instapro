@@ -9,21 +9,16 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
       ${
         imageUrl
           ? `
-          <div class="file-upload-image-conrainer">
-            <img class="file-upload-image" src="${imageUrl}">
+          <div class="file-upload-image-container">
+            <img class="file-upload-image" src="${imageUrl}" alt="preview">
             <button class="file-upload-remove-button button">Заменить фото</button>
           </div>
           `
           : `
-            <label class="file-upload-label secondary-button">
-                <input
-                  type="file"
-                  class="file-upload-input"
-                  style="display:none"
-                />
-                Выберите фото
-            </label>
-          
+          <label class="file-upload-label secondary-button">
+            <input type="file" class="file-upload-input" style="display:none">
+            Выберите фото
+          </label>
       `
       }
   </div>
@@ -34,12 +29,11 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
     fileInputElement?.addEventListener("change", () => {
       const file = fileInputElement.files[0];
       if (file) {
-        const lableEl = document.querySelector(".file-upload-label");
-        lableEl.setAttribute("disabled", true);
-        lableEl.textContent = "Загружаю файл...";
-        uploadImage({ file }).then(({ fileUrl }) => {
-          imageUrl = fileUrl;
-          onImageUrlChange(imageUrl);
+        const labelEl = document.querySelector(".file-upload-label");
+        labelEl.setAttribute("disabled", true);
+        labelEl.textContent = "Загружаю файл...";
+        uploadImage(file).then((data) => {
+          onImageUrlChange(data.fileUrl);
           render();
         });
       }
@@ -48,8 +42,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
     element
       .querySelector(".file-upload-remove-button")
       ?.addEventListener("click", () => {
-        imageUrl = "";
-        onImageUrlChange(imageUrl);
+        onImageUrlChange("");
         render();
       });
   };

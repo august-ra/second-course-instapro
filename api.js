@@ -1,3 +1,4 @@
+
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
 const personalKey = "prod";
@@ -57,7 +58,7 @@ export function loginUser({ login, password }) {
 }
 
 // Загружает картинку в облако, возвращает url загруженной картинки
-export function uploadImage({ file }) {
+export function uploadImage(file) {
   const data = new FormData();
   data.append("file", file);
 

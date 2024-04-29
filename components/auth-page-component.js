@@ -7,50 +7,47 @@ export function renderAuthPageComponent({ appEl, setUser }) {
   let imageUrl = "";
 
   const renderForm = () => {
-    const appHtml = `
-      <div class="page-container">
-          <div class="header-container"></div>
-          <div class="form">
-              <h3 class="form-title">
-                ${
-                  isLoginMode
-                    ? "Вход в&nbsp;Instapro"
-                    : "Регистрация в&nbsp;Instapro"
-                }
-                </h3>
-              <div class="form-inputs">
-    
-                  ${
-                    !isLoginMode
-                      ? `
-                      <div class="upload-image-container"></div>
-                      <input type="text" id="name-input" class="input" placeholder="Имя" />
-                      `
-                      : ""
-                  }
-                  
-                  <input type="text" id="login-input" class="input" placeholder="Логин" />
-                  <input type="password" id="password-input" class="input" placeholder="Пароль" />
-                  
-                  <div class="form-error"></div>
-                  
-                  <button class="button" id="login-button">${
-                    isLoginMode ? "Войти" : "Зарегистрироваться"
-                  }</button>
-              </div>
+    const appHtml = `<div class="page-container">
+      <div class="header-container"></div>
+        <div class="form">
+          <h3 class="form-title">
+            ${
+              isLoginMode
+                ? "Вход в&nbsp;Instapro"
+                : "Регистрация в&nbsp;Instapro"
+            }
+          </h3>
+          <div class="form-inputs">
+
+            ${
+              !isLoginMode
+                ? `
+                <div class="upload-image-container"></div>
+                <input type="text" id="name-input" class="input" placeholder="Имя">
+                `
+                : ""
+            }
             
-              <div class="form-footer">
-                <p class="form-footer-title">
-                  ${isLoginMode ? "Нет аккаунта?" : "Уже есть аккаунт?"}
-                  <button class="link-button" id="toggle-button">
-                    ${isLoginMode ? "Зарегистрироваться." : "Войти."}
-                  </button>
-                </p> 
-               
-              </div>
+            <input type="text" id="login-input" class="input" placeholder="Логин">
+            <input type="password" id="password-input" class="input" placeholder="Пароль">
+            
+            <div class="form-error"></div>
+            
+            <button class="button" id="login-button">${
+              isLoginMode ? "Войти" : "Зарегистрироваться"
+            }</button>
           </div>
-      </div>    
-`;
+
+          <div class="form-footer">
+            <p class="form-footer-title">
+              ${isLoginMode ? "Нет аккаунта?" : "Уже есть аккаунт?"}
+              <button class="link-button" id="toggle-button">
+                ${isLoginMode ? "Зарегистрироваться." : "Войти."}
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>`;
 
     appEl.innerHTML = appHtml;
 

@@ -1,5 +1,5 @@
 /* 
-  Это стили Дизайн системы, сквозные стили для элементов интерфейса
+  Это стили Дизайн-системы, сквозные стили для элементов интерфейса
   всего приложения: шрифты, кнопки, инпуты и так далее
 */
 
@@ -27,7 +27,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: StratosSkyeng;
+  font-family: "StratosSkyeng", sans-serif;
   overflow: auto;
   font-size: 14px;
   line-height: 18px;
@@ -147,7 +147,7 @@ strong {
 }
 .loader div:nth-child(3) {
   left: 56px;
-  animation-delay: 0;
+  animation-delay: 0ms;
 }
 @keyframes loader {
   0% {
