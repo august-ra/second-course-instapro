@@ -89,8 +89,8 @@ const renderApp = () => {
 
   if (page === routes.USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользвателя
-    return;
     appEl.innerHTML = "Здесь будет страница фотографий пользователя"
+    return
   }
 }
 
