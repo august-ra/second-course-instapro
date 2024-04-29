@@ -1,10 +1,10 @@
-import { routes } from "../routes.js";
-import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { routes } from "../routes.js"
+import { renderHeaderComponent } from "./header-component.js"
+import { posts, goToPage } from "../index.js"
 
-export function renderPostsPageComponent({ appEl }) {
+export function renderPostsPageComponent(appEl) {
   // TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
+  console.log("Актуальный список постов:", posts)
 
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
@@ -102,19 +102,17 @@ export function renderPostsPageComponent({ appEl }) {
           </p>
         </li>
       </ul>
-    </div>`;
+    </div>`
 
-  appEl.innerHTML = appHtml;
+  appEl.innerHTML = appHtml
 
-  renderHeaderComponent({
-    element: document.querySelector(".header-container"),
-  });
+  renderHeaderComponent()
 
-  for (let userEl of document.querySelectorAll(".post-header")) {
-    userEl.addEventListener("click", () => {
+  for (let element of document.querySelectorAll(".post-header")) {
+    element.addEventListener("click", () => {
       goToPage(routes.USER_POSTS_PAGE, {
-        userId: userEl.dataset.userId,
-      });
-    });
+        userId: element.dataset.userId,
+      })
+    })
   }
 }

@@ -24,6 +24,7 @@
 }
 
 .header-button {
+  height: 30px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -33,7 +34,7 @@
   cursor: pointer;
 }
 
-.logout-button {
+.login-logout-button {
   width: 130px;
   text-align: right;
 }

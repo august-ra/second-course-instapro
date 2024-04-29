@@ -1,10 +1,10 @@
-import { loginUser, registerUser } from "../api.js";
-import { renderHeaderComponent } from "./header-component.js";
-import { renderUploadImageComponent } from "./upload-image-component.js";
+import { loginUser, registerUser } from "../api.js"
+import { renderHeaderComponent } from "./header-component.js"
+import { renderUploadImageComponent } from "./upload-image-component.js"
 
-export function renderAuthPageComponent({ appEl, setUser }) {
-  let isLoginMode = true;
-  let imageUrl = "";
+export function renderAuthPageComponent(appEl, setUser) {
+  let isLoginMode = true
+  let imageUrl = ""
 
   const renderForm = () => {
     const appHtml = `<div class="page-container">
@@ -17,8 +17,8 @@ export function renderAuthPageComponent({ appEl, setUser }) {
                 : "Регистрация в&nbsp;Instapro"
             }
           </h3>
-          <div class="form-inputs">
 
+          <div class="form-inputs">
             ${
               !isLoginMode
                 ? `
@@ -27,12 +27,12 @@ export function renderAuthPageComponent({ appEl, setUser }) {
                 `
                 : ""
             }
-            
+
             <input type="text" id="login-input" class="input" placeholder="Логин">
             <input type="password" id="password-input" class="input" placeholder="Пароль">
-            
+
             <div class="form-error"></div>
-            
+
             <button class="button" id="login-button">${
               isLoginMode ? "Войти" : "Зарегистрироваться"
             }</button>
@@ -47,103 +47,83 @@ export function renderAuthPageComponent({ appEl, setUser }) {
             </p>
           </div>
         </div>
-      </div>`;
+      </div>`
 
-    appEl.innerHTML = appHtml;
+    appEl.innerHTML = appHtml
 
-    // Не вызываем перерендер, чтобы не сбрасывалась заполненная форма
+    // Не вызываем обновление, чтобы не сбрасывалась заполненная форма
     // Точечно обновляем кусочек дом дерева
     const setError = (message) => {
-      appEl.querySelector(".form-error").textContent = message;
-    };
+      appEl.querySelector(".form-error").textContent = message
+    }
 
-    renderHeaderComponent({
-      element: document.querySelector(".header-container"),
-    });
+    renderHeaderComponent()
 
-    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+    const uploadImageContainer = appEl.querySelector(".upload-image-container")
 
     if (uploadImageContainer) {
       renderUploadImageComponent({
         element: appEl.querySelector(".upload-image-container"),
         onImageUrlChange(newImageUrl) {
-          imageUrl = newImageUrl;
+          imageUrl = newImageUrl
         },
-      });
+      })
     }
 
     document.getElementById("login-button").addEventListener("click", () => {
-      setError("");
+      setError("")
 
       if (isLoginMode) {
-        const login = document.getElementById("login-input").value;
-        const password = document.getElementById("password-input").value;
+        const login = document.getElementById("login-input").value
+        const password = document.getElementById("password-input").value
 
-        if (!login) {
-          alert("Введите логин");
-          return;
-        }
+        if (!login)
+          return alert("Введите логин")
 
-        if (!password) {
-          alert("Введите пароль");
-          return;
-        }
+        if (!password)
+          return alert("Введите пароль")
 
-        loginUser({
-          login: login,
-          password: password,
-        })
-          .then((user) => {
-            setUser(user.user);
+        loginUser(login, password)
+          .then((data) => {
+            setUser(data.user)
           })
           .catch((error) => {
-            console.warn(error);
-            setError(error.message);
-          });
+            console.warn(error)
+            setError(error.message)
+          })
       } else {
-        const login = document.getElementById("login-input").value;
-        const name = document.getElementById("name-input").value;
-        const password = document.getElementById("password-input").value;
-        if (!name) {
-          alert("Введите имя");
-          return;
-        }
-        if (!login) {
-          alert("Введите логин");
-          return;
-        }
+        const login    = document.getElementById("login-input").value
+        const name     = document.getElementById("name-input").value
+        const password = document.getElementById("password-input").value
 
-        if (!password) {
-          alert("Введите пароль");
-          return;
-        }
+        if (!name)
+          return alert("Введите имя")
 
-        if (!imageUrl) {
-          alert("Не выбрана фотография");
-          return;
-        }
+        if (!login)
+          return alert("Введите логин")
 
-        registerUser({
-          login: login,
-          password: password,
-          name: name,
-          imageUrl,
-        })
-          .then((user) => {
-            setUser(user.user);
+        if (!password)
+          return alert("Введите пароль")
+
+        if (!imageUrl)
+          return alert("Не выбрана фотография")
+
+        registerUser(login, password, name, imageUrl)
+          .then((data) => {
+            setUser(data.user)
           })
           .catch((error) => {
-            console.warn(error);
-            setError(error.message);
-          });
+            console.warn(error)
+            setError(error.message)
+          })
       }
-    });
+    })
 
     document.getElementById("toggle-button").addEventListener("click", () => {
-      isLoginMode = !isLoginMode;
-      renderForm();
-    });
-  };
+      isLoginMode = !isLoginMode
+      renderForm()
+    })
+  }
 
-  renderForm();
+  renderForm()
 }

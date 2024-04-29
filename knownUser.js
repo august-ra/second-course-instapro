@@ -1,18 +1,44 @@
 
 export const knownUser = {
-  getUserFromLocalStorage(user) {
+  name:  "",
+  token: "",
+
+  getUserFromLocalStorage() {
     try {
-      return JSON.parse(window.localStorage.getItem("user"));
+      const data = JSON.parse(window.localStorage.getItem("user"))
+      this.name  = data.name
+      this.token = data.token
     } catch (error) {
-      return null;
+      this.name  = ""
+      this.token = ""
     }
   },
 
-  saveUserToLocalStorage(user) {
-    window.localStorage.setItem("user", JSON.stringify(user));
+  saveUserToLocalStorage() {
+    window.localStorage.setItem("user", JSON.stringify({
+      name: this.name, token: this.token
+    }))
   },
 
-  removeUserFromLocalStorage(user) {
-    window.localStorage.removeItem("user");
+  removeUserFromLocalStorage() {
+    window.localStorage.removeItem("user")
+  },
+
+  getToken() {
+    return knownUser.token ? `Bearer ${knownUser.token}` : undefined
+  },
+
+  login(name, token) {
+    this.name  = name
+    this.token = token
+
+    this.saveUserToLocalStorage()
+  },
+
+  logout() {
+    this.name  = ""
+    this.token = ""
+
+    this.removeUserFromLocalStorage()
   },
 }
