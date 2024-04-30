@@ -1,13 +1,13 @@
 import { goToPage, logout } from "../index.js"
 import { routes } from "../routes.js"
-import { knownUser } from "../knownUser.js";
+import { knownUser } from "../knownUser.js"
 
-export function renderHeaderComponent() {
+export function renderHeaderComponent(showAddButton = true) {
   const element = document.querySelector(".header-container")
   element.innerHTML = `<div class="page-header">
       <h1 class="logo">instapro</h1>
       ${
-        knownUser.name
+        showAddButton && knownUser.name
           ? `<button class="header-button add-post-button">
             <div title="Добавить пост" class="add-post-sign"></div>
           </button>`

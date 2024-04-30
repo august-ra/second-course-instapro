@@ -37,7 +37,7 @@ export function renderPostsPageComponent(appEl) {
 
           <p class="post-text">
             <span class="user-name">${post.user.name}</span>
-            ${post.description}
+            ${post.description.multiline()}
           </p>
 
           <p class="post-date">

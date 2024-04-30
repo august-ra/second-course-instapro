@@ -74,3 +74,22 @@ export function uploadImage(file) {
   })
     .then((response) => response.json())
 }
+
+export function uploadPost(description, imageUrl) {
+  return fetch(postsHost, {
+    method: "POST",
+    headers: {
+      Authorization: knownUser.getToken(),
+    },
+    body: JSON.stringify({
+      description: description,
+      imageUrl:    imageUrl,
+    })
+  })
+    .then((response) => {
+      if (response.status === 401)
+        throw new Error("Нет авторизации")
+      else
+        return response.json()
+    })
+}

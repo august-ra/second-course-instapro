@@ -38,6 +38,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+textarea {
+  font-family: "StratosSkyeng", sans-serif;
+}
+
 p {
   margin: 0;
 }

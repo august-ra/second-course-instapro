@@ -35,16 +35,19 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
       labelEl.setAttribute("disabled", true)
       labelEl.textContent = "Загружаю файл..."
 
-      uploadImage(file).then((data) => {
-        onImageUrlChange(data.fileUrl)
-        render()
-      })
+      uploadImage(file)
+        .then((data) => {
+          imageUrl = data.fileUrl
+          onImageUrlChange(imageUrl)
+          render()
+        })
     })
 
     element
       .querySelector(".file-upload-remove-button")
       ?.addEventListener("click", () => {
-        onImageUrlChange("")
+        imageUrl = ""
+        onImageUrlChange(imageUrl)
         render()
       })
   }

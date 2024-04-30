@@ -1,4 +1,5 @@
-import { getPosts, getUserPosts } from "./api.js"
+import {} from "./prototypes.js"
+import { getPosts, getUserPosts, uploadPost } from "./api.js"
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js"
 import { renderAuthPageComponent } from "./components/auth-page-component.js"
 import { routes } from "./routes.js"
@@ -82,10 +83,17 @@ const renderApp = () => {
   }
 
   if (page === routes.ADD_POSTS_PAGE) {
-    const onAddPostClick = (description, imageUrl) => {
-      // TODO: реализовать добавление поста в API
-      console.log("Добавляю пост...", { description, imageUrl })
-      goToPage(routes.POSTS_PAGE)
+    const onAddPostClick = (description, imageUrl, setError) => {
+      uploadPost(description, imageUrl)
+        .then((data) => {
+          if (data.result === "ok")
+            goToPage(routes.POSTS_PAGE)
+          else
+            setError(data.error)
+        })
+        .catch((error) => {
+          setError(error.message)
+        })
     }
 
     return renderAddPostPageComponent(appEl, onAddPostClick)

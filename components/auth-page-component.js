@@ -7,7 +7,7 @@ export function renderAuthPageComponent(appEl, setUser) {
   let imageUrl = ""
 
   const renderForm = () => {
-    const appHtml = `<div class="page-container">
+    appEl.innerHTML = `<div class="page-container">
       <div class="header-container"></div>
         <div class="form">
           <h3 class="form-title">
@@ -20,12 +20,12 @@ export function renderAuthPageComponent(appEl, setUser) {
 
           <div class="form-inputs">
             ${
-              !isLoginMode
-                ? `
+              isLoginMode
+                ? ""
+                : `
                 <div class="upload-image-container"></div>
                 <input type="text" id="name-input" class="input" placeholder="Имя">
                 `
-                : ""
             }
 
             <input type="text" id="login-input" class="input" placeholder="Логин">
@@ -48,8 +48,6 @@ export function renderAuthPageComponent(appEl, setUser) {
           </div>
         </div>
       </div>`
-
-    appEl.innerHTML = appHtml
 
     // Не вызываем обновление, чтобы не сбрасывалась заполненная форма
     // Точечно обновляем кусочек дом дерева
