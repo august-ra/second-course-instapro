@@ -7,7 +7,7 @@ import { ru } from "date-fns/locale";
 
 
 export function renderPostsPageComponent(appEl) {
-  const appHtml = `
+  appEl.innerHTML = `
     <div class="page-container">
       <div class="header-container"></div>
 
@@ -15,7 +15,7 @@ export function renderPostsPageComponent(appEl) {
       ${posts.map((post) => {
         const likeImg = post.isLiked ? "like-active" : "like-not-active"
         console.log(post.description)
-        
+
         return `
         <li class="post">
           <div class="post-header" data-user-id="${post.user.id}">
@@ -48,8 +48,6 @@ export function renderPostsPageComponent(appEl) {
       }).join("")}
       </ul>
     </div>`
-
-  appEl.innerHTML = appHtml
 
   renderHeaderComponent()
 
