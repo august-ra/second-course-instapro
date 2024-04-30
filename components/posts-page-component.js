@@ -14,7 +14,6 @@ export function renderPostsPageComponent(appEl) {
       <ul class="posts">
       ${posts.map((post) => {
         const likeImg = post.isLiked ? "like-active" : "like-not-active"
-        console.log(post.description)
 
         return `
         <li class="post">
