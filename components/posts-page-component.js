@@ -131,7 +131,6 @@ export function renderPostsPageComponent(appEl) {
       parent.innerHTML = printDeleteLoader()
 
       API.deletePost(element.dataset.postId)
-        // .then
         .then((data) => {
           let error
 
