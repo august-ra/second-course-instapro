@@ -1,4 +1,4 @@
-import { uploadImage } from "../api.js"
+import { API } from "../api.js"
 
 export function renderUploadImageComponent({ element, onImageUrlChange }) {
   let imageUrl = ""
@@ -35,7 +35,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
       labelEl.setAttribute("disabled", true)
       labelEl.textContent = "Загружаю файл..."
 
-      uploadImage(file)
+      API.uploadImage(file)
         .then((data) => {
           imageUrl = data.fileUrl
           onImageUrlChange(imageUrl)

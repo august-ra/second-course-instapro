@@ -1,95 +1,99 @@
-import {knownUser} from "./knownUser.js"
+import { knownUser } from "./knownUser.js"
 
-// Замени на свой, чтобы получить независимый от других набор данных.
-// "боевая" версия инстапро лежит в ключе prod
-const personalKey = "prod"
-const baseHost = "https://webdev-hw-api.vercel.app"
-const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`
+export const API = {
+  personalKey: "prod", // "боевая" версия
+  baseHost:    "https://webdev-hw-api.vercel.app",
+  postsHost:   "",
 
-export function getPosts(url = "") {
-  if (!url)
-    url = postsHost
+  init() {
+    this.postsHost = `${this.baseHost}/api/v1/${this.personalKey}/instapro`
+  },
 
-  return fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: knownUser.getToken(),
-    },
-  })
-    .then((response) => {
-      if (response.status === 401)
-        throw new Error("Нет авторизации")
+  getPosts(url = "") {
+    if (!url)
+      url = this.postsHost
 
-      return response.json()
+    return fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: knownUser.getToken(),
+      },
     })
-    .then((data) => data.posts)
-}
+      .then((response) => {
+        if (response.status === 401)
+          throw new Error("Нет авторизации")
 
-export function getUserPosts(userId) {
-  return getPosts(`${postsHost}/user-posts/${userId}`)
-}
-
-// https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
-export function registerUser(login, password, name, imageUrl) {
-  return fetch(baseHost + "/api/user", {
-    method: "POST",
-    body: JSON.stringify({
-      login,
-      password,
-      name,
-      imageUrl,
-    }),
-  }).then((response) => {
-    if (response.status === 400)
-      throw new Error("Такой пользователь уже существует")
-
-    return response.json()
-  })
-}
-
-export function loginUser(login, password) {
-  return fetch(baseHost + "/api/user/login", {
-    method: "POST",
-    body: JSON.stringify({
-      login,
-      password,
-    }),
-  })
-    .then((response) => {
-      if (response.status === 400)
-        throw new Error("Неверный логин или пароль")
-
-      return response.json()
-    })
-}
-
-// Загружает картинку в облако, возвращает url загруженной картинки
-export function uploadImage(file) {
-  const data = new FormData()
-  data.append("file", file)
-
-  return fetch(baseHost + "/api/upload/image", {
-    method: "POST",
-    body: data,
-  })
-    .then((response) => response.json())
-}
-
-export function uploadPost(description, imageUrl) {
-  return fetch(postsHost, {
-    method: "POST",
-    headers: {
-      Authorization: knownUser.getToken(),
-    },
-    body: JSON.stringify({
-      description: description,
-      imageUrl:    imageUrl,
-    })
-  })
-    .then((response) => {
-      if (response.status === 401)
-        throw new Error("Нет авторизации")
-      else
         return response.json()
+      })
+      .then((data) => data.posts)
+  },
+
+  getUserPosts(userId) {
+    return this.getPosts(`${this.postsHost}/user-posts/${userId}`)
+  },
+
+  // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
+  registerUser(login, password, name, imageUrl) {
+    return fetch(this.baseHost + "/api/user", {
+      method: "POST",
+      body: JSON.stringify({
+        login,
+        password,
+        name,
+        imageUrl,
+      }),
+    }).then((response) => {
+      if (response.status === 400)
+        throw new Error("Такой пользователь уже существует")
+
+      return response.json()
     })
+  },
+
+  loginUser(login, password) {
+    return fetch(this.baseHost + "/api/user/login", {
+      method: "POST",
+      body: JSON.stringify({
+        login,
+        password,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 400)
+          throw new Error("Неверный логин или пароль")
+
+        return response.json()
+      })
+  },
+
+  // Загружает картинку в облако, возвращает url загруженной картинки
+  uploadImage(file) {
+    const data = new FormData()
+    data.append("file", file)
+
+    return fetch(this.baseHost + "/api/upload/image", {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => response.json())
+  },
+
+  uploadPost(description, imageUrl) {
+    return fetch(this.postsHost, {
+      method: "POST",
+      headers: {
+        Authorization: knownUser.getToken(),
+      },
+      body: JSON.stringify({
+        description: description,
+        imageUrl:    imageUrl,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 401)
+          throw new Error("Нет авторизации")
+        else
+          return response.json()
+      })
+  },
 }

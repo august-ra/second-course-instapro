@@ -1,5 +1,5 @@
 import {} from "./prototypes.js"
-import { getPosts, getUserPosts, uploadPost } from "./api.js"
+import { API } from "./api.js"
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js"
 import { renderAuthPageComponent } from "./components/auth-page-component.js"
 import { routes } from "./routes.js"
@@ -7,6 +7,7 @@ import { renderPostsPageComponent } from "./components/posts-page-component.js"
 import { renderLoadingPageComponent } from "./components/loading-page-component.js"
 import { knownUser } from "./knownUser.js"
 
+API.init()
 knownUser.getUserFromLocalStorage()
 export let page = null
 export let posts = []
@@ -33,7 +34,7 @@ export const goToPage = (newPage, data) => {
     page = routes.LOADING_PAGE
     renderApp()
 
-    return getPosts()
+    return API.getPosts()
       .then((newPosts) => {
         page = routes.POSTS_PAGE
         posts = newPosts
@@ -49,7 +50,7 @@ export const goToPage = (newPage, data) => {
     page = routes.LOADING_PAGE
     renderApp()
 
-    return getUserPosts(data.userId)
+    return API.getUserPosts(data.userId)
       .then((newPosts) => {
         page = routes.USER_POSTS_PAGE
         posts = newPosts
@@ -84,7 +85,7 @@ const renderApp = () => {
 
   if (page === routes.ADD_POSTS_PAGE) {
     const onAddPostClick = (description, imageUrl, setError) => {
-      uploadPost(description, imageUrl)
+      API.uploadPost(description, imageUrl)
         .then((data) => {
           if (data.result === "ok")
             goToPage(routes.POSTS_PAGE)

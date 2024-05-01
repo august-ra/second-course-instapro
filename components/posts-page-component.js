@@ -50,11 +50,11 @@ export function renderPostsPageComponent(appEl) {
 
   renderHeaderComponent()
 
-  for (let element of document.querySelectorAll(".post-header")) {
+  document.querySelectorAll(".post-header").forEach((element) => {
     element.addEventListener("click", () => {
       goToPage(routes.USER_POSTS_PAGE, {
         userId: element.dataset.userId,
       })
     })
-  }
+  })
 }

@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "../api.js"
+import { API } from "../api.js"
 import { renderHeaderComponent } from "./header-component.js"
 import { renderUploadImageComponent } from "./upload-image-component.js"
 
@@ -81,7 +81,7 @@ export function renderAuthPageComponent(appEl, setUser) {
         if (!password)
           return alert("Введите пароль")
 
-        loginUser(login, password)
+        API.loginUser(login, password)
           .then((data) => {
             setUser(data.user)
           })
@@ -106,7 +106,7 @@ export function renderAuthPageComponent(appEl, setUser) {
         if (!imageUrl)
           return alert("Не выбрана фотография")
 
-        registerUser(login, password, name, imageUrl)
+        API.registerUser(login, password, name, imageUrl)
           .then((data) => {
             setUser(data.user)
           })
