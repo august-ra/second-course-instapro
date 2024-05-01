@@ -78,6 +78,7 @@ export const API = {
       .then((response) => response.json())
   },
 
+  // Отправляет пост на сервер, в ответ приходит result="ok"
   uploadPost(description, imageUrl) {
     return fetch(this.postsHost, {
       method: "POST",
@@ -95,5 +96,24 @@ export const API = {
         else
           return response.json()
       })
+  },
+
+  // Изменяет отметку "Нравится" на сервере, в ответ приходит обновление текущего поста
+  toggleLike(postId, liked) {
+    const url = `${this.postsHost}/${postId}/${liked ? "like" : "dislike"}`
+
+    return fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: knownUser.getToken(),
+      },
+    })
+      .then((response) => {
+        if (response.status === 401)
+          throw new Error("Нет авторизации")
+        else
+          return response.json()
+      })
+      .then((data) => data.post)
   },
 }
