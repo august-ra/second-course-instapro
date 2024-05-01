@@ -1,7 +1,8 @@
 import { knownUser } from "./knownUser.js"
 
 export const API = {
-  personalKey: "prod", // "боевая" версия
+  // personalKey: "prod", // "боевая" версия
+  personalKey: "@august-ra", // персональная версия
   baseHost:    "https://webdev-hw-api.vercel.app",
   postsHost:   "",
 
