@@ -2,8 +2,8 @@ import { routes } from "../routes.js"
 import { renderHeaderComponent } from "./header-component.js"
 import { posts, goToPage } from "../index.js"
 
-import { formatDistanceToNow } from "date-fns";
-import { ru } from "date-fns/locale";
+import { formatDistanceToNow } from "date-fns"
+import { ru } from "date-fns/locale"
 
 
 export function renderPostsPageComponent(appEl) {
