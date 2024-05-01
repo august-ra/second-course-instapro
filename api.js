@@ -1,13 +1,14 @@
 import { knownUser } from "./knownUser.js"
 
 export const API = {
-  // personalKey: "prod", // "боевая" версия
-  personalKey: "@august-ra", // персональная версия
+  personalKey: "",
   baseHost:    "https://webdev-hw-api.vercel.app",
   postsHost:   "",
 
   init() {
-    this.postsHost = `${this.baseHost}/api/v1/${this.personalKey}/instapro`
+    // this.personalKey = "prod"       // "боевая" версия
+    this.personalKey = "@august-ra" // персональная версия
+    this.postsHost   = `${this.baseHost}/api/v1/${this.personalKey}/instapro`
   },
 
   getPosts(url = "") {

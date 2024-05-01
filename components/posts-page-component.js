@@ -1,4 +1,5 @@
 import { routes } from "../routes.js"
+import { knownUser } from "../knownUser.js"
 import { API } from "../api.js"
 import { renderHeaderComponent } from "./header-component.js"
 import { posts, goToPage } from "../index.js"
@@ -66,7 +67,7 @@ export function renderPostsPageComponent(appEl) {
 
           <p class="post-text">
             <span class="user-name">${post.user.name}</span>
-            ${post.description.multiline()}
+            ${post.description.formatText()}
           </p>
 
           <p class="post-date">
@@ -89,6 +90,9 @@ export function renderPostsPageComponent(appEl) {
 
   document.querySelectorAll(".like-button").forEach((element) => {
     const listener = (event) => {
+      if (!knownUser.name)
+        return
+
       const element = event.currentTarget
 
       API.toggleLike(element.dataset.postId, element.dataset.postLike !== "1")

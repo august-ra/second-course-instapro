@@ -54,7 +54,11 @@ String.prototype.sterilize = function () {
 /**
  * Функция выводит многострочный текст, где переносы строк заменены валидным HTML-тегом <br>
  */
-String.prototype.multiline = function () {
-  const lines = this.split("\n")
+String.prototype.formatText = function () {
+  const text = this
+    .replaceAll("=>", "&rArr;")
+    .replaceAll("=&gt;", "&rArr;")
+
+  const lines = text.split("\n")
   return lines.join("<br>")
 }
