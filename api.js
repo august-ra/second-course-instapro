@@ -80,7 +80,7 @@ export const API = {
       .then((response) => response.json())
   },
 
-  // Отправляет пост на сервер, в ответ приходит result="ok"
+  // Отправляет пост на сервер, в ответ приходит result="ok" либо текст ошибки
   uploadPost(description, imageUrl) {
     return fetch(this.postsHost, {
       method: "POST",
@@ -91,6 +91,24 @@ export const API = {
         description: description,
         imageUrl:    imageUrl,
       }),
+    })
+      .then((response) => {
+        if (response.status === 401)
+          throw new Error("Нет авторизации")
+        else
+          return response.json()
+      })
+  },
+
+  // Удаляем пост на сервере, в ответ приходит result="ok" либо текст ошибки
+  deletePost(postId) {
+    const url = `${this.postsHost}/${postId}`
+
+    return fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: knownUser.getToken(),
+      },
     })
       .then((response) => {
         if (response.status === 401)

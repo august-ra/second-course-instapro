@@ -48,6 +48,22 @@
   margin: 0;
 }
 
+.post {
+  transition: height 0.25s ease-in-out;
+}
+
+.post-deleted {
+  height: 100%;
+  color: maroon;
+  letter-spacing: 20px;
+  border: 2px solid brown;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
 .post-header {
   display: flex;
   flex-direction: row;
@@ -71,6 +87,7 @@
   display: flex;
   justify-content: center;
   background-color: #e0e0e0;
+  transition: height 0.5s ease-in-out;
 }
 
 .post-image {
@@ -78,6 +95,13 @@
   height: 100%;
   max-width: 500px;
   object-fit: cover;
+}
+
+.post-commands {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .post-likes {
@@ -91,6 +115,15 @@
   background-color: transparent;
   padding: 8px 8px 5px 0;
   cursor: pointer;
+}
+
+.post-delete {
+  color: brown;
+
+  &:hover {
+    color: red;
+    text-decoration: none;
+  }
 }
 
 .user-name {
