@@ -23,7 +23,7 @@ export function renderAddPostPageComponent(appEl, onAddPostClick) {
       </div>`
 
     // Не вызываем обновление, чтобы не сбрасывалась заполненная форма
-    // Точечно обновляем кусочек дом дерева
+    // Точечно обновляем часть DOM-дерева
     const setError = (message) => {
       appEl.querySelector(".form-error").textContent = message
     }

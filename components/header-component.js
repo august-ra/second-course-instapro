@@ -2,7 +2,7 @@ import { goToPage, logout } from "../index.js"
 import { routes } from "../routes.js"
 import { knownUser } from "../knownUser.js"
 
-export function renderHeaderComponent(showAddButton = true) {
+export function renderHeaderComponent(showAddButton = true, showLoginButton = true) {
   const element = document.querySelector(".header-container")
   element.innerHTML = `<div class="page-header">
       <h1 class="logo">instapro</h1>
@@ -13,13 +13,17 @@ export function renderHeaderComponent(showAddButton = true) {
           </button>`
           : ""
       }
-      <button title="${knownUser.name}" class="header-button login-logout-button">
       ${
-        knownUser.name
-          ? `Выйти`
-          : `Войти`
+        showLoginButton
+          ? `<button title="${knownUser.name}" class="header-button login-logout-button">
+            ${
+              knownUser.name
+                ? `Выйти`
+                : `Войти`
+            }
+          </button>`
+          : ""
       }
-      </button>
     </div>`
 
   element.querySelector(".add-post-button")?.addEventListener("click", () => {
@@ -30,7 +34,7 @@ export function renderHeaderComponent(showAddButton = true) {
     goToPage(routes.POSTS_PAGE)
   })
 
-  element.querySelector(".login-logout-button").addEventListener("click", () => {
+  element.querySelector(".login-logout-button")?.addEventListener("click", () => {
     if (knownUser.name)
       logout()
     else

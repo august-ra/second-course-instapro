@@ -20,7 +20,7 @@
 }
 
 html {
-  /* скрывает скролбары в firefox */
+  /* скрывает полосы прокрутки в firefox */
   scrollbar-width: none;
 }
 
@@ -33,7 +33,7 @@ body {
   line-height: 18px;
 }
 
-/* скрывает скролбары в chrome */
+/* скрывает полосы прокрутки в chrome */
 body::-webkit-scrollbar {
   display: none;
 }
