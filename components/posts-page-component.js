@@ -48,7 +48,7 @@ export function renderPostsPageComponent(appEl) {
     return `<a href="#" class="post-delete" data-post-id="${postId}">Удалить</a>`
   }
 
-  const printDeleteAnimation = () => {
+  const printDeleteLoader = () => {
     return `<div class="loader-small"><div></div><div></div><div></div></div>`
   }
 
@@ -128,7 +128,7 @@ export function renderPostsPageComponent(appEl) {
         return
 
       const parent = element.parentElement
-      parent.innerHTML = printDeleteAnimation()
+      parent.innerHTML = printDeleteLoader()
 
       API.deletePost(element.dataset.postId)
         // .then
