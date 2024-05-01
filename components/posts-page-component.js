@@ -37,7 +37,7 @@ export function renderPostsPageComponent(appEl) {
 
     return `
       <button data-post-id="${post.id}" data-post-like="${Number(post.isLiked)}" class="like-button">
-        <img src="../assets/images/${likeImg}.svg" alt="heart"/>
+        <img src="./assets/images/${likeImg}.svg" alt="heart"/>
       </button>
       <p class="post-likes-text">
         Нравится: ${likeParts.join("")}
