@@ -56,8 +56,12 @@ String.prototype.sterilize = function () {
  */
 String.prototype.formatText = function () {
   const text = this
+    .sterilize()
+    .replaceAll("&amp;sol;", "/")
+    .replaceAll("&sol;", "/")
     .replaceAll("=>", "&rArr;")
     .replaceAll("=&gt;", "&rArr;")
+    .replaceAll("=&amp;gt;", "&rArr;")
 
   const lines = text.split("\n")
   return lines.join("<br>")
