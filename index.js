@@ -5,6 +5,7 @@ import { API } from "./api.js"
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js"
 import { renderAuthPageComponent } from "./components/auth-page-component.js"
 import { renderPostsPageComponent } from "./components/posts-page-component.js"
+import { renderUserPostsPageComponent } from "./components/user-posts-page-component.js"
 import { renderLoadingPageComponent } from "./components/loading-page-component.js"
 
 API.init()
@@ -105,7 +106,7 @@ const renderApp = () => {
   }
 
   if (page === routes.USER_POSTS_PAGE) {
-    return renderPostsPageComponent(appEl)
+    return renderUserPostsPageComponent(appEl)
   }
 }
 
