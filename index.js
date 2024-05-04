@@ -8,6 +8,7 @@ import { renderPostsPageComponent } from "./components/posts-page-component.js"
 import { renderUserPostsPageComponent } from "./components/user-posts-page-component.js"
 import { renderLoadingPageComponent } from "./components/loading-page-component.js"
 
+
 API.init()
 knownUser.getUserFromLocalStorage()
 export let page = null

@@ -1,6 +1,6 @@
-import { goToPage, logout } from "../index.js"
 import { routes } from "../routes.js"
 import { knownUser } from "../knownUser.js"
+import { goToPage, logout } from "../index.js"
 
 export function renderHeaderComponent(showAddButton = true, showLoginButton = true) {
   const element = document.querySelector(".header-container")
