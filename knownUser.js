@@ -1,22 +1,27 @@
 
 export const knownUser = {
   name:  "",
+  login: "",
   token: "",
 
   getUserFromLocalStorage() {
     try {
       const data = JSON.parse(window.localStorage.getItem("user"))
       this.name  = data.name
+      this.login = data.login
       this.token = data.token
     } catch (error) {
       this.name  = ""
+      this.login = ""
       this.token = ""
     }
   },
 
   saveUserToLocalStorage() {
     window.localStorage.setItem("user", JSON.stringify({
-      name: this.name, token: this.token
+      name:  this.name,
+      login: this.login,
+      token: this.token,
     }))
   },
 
@@ -28,15 +33,17 @@ export const knownUser = {
     return knownUser.token ? `Bearer ${knownUser.token}` : undefined
   },
 
-  login(name, token) {
+  loginUser(name, login, token) {
     this.name  = name
+    this.login = login
     this.token = token
 
     this.saveUserToLocalStorage()
   },
 
-  logout() {
+  logoutUser() {
     this.name  = ""
+    this.login = ""
     this.token = ""
 
     this.removeUserFromLocalStorage()

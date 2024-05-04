@@ -13,7 +13,7 @@ export let page = null
 export let posts = []
 
 export const logout = () => {
-  knownUser.logout()
+  knownUser.logoutUser()
   goToPage(routes.POSTS_PAGE)
 }
 
@@ -75,7 +75,7 @@ const renderApp = () => {
 
   if (page === routes.AUTH_PAGE) {
     const setUser = (newUser) => {
-      knownUser.login(newUser.name, newUser.token)
+      knownUser.loginUser(newUser.name, newUser.login, newUser.token)
 
       goToPage(routes.POSTS_PAGE)
     }
