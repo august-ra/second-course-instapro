@@ -2,6 +2,7 @@ import { routes } from "../routes.js"
 import { knownUser } from "../knownUser.js"
 import { API } from "../api.js"
 import { renderHeaderComponent } from "./header-component.js"
+import { renderLikeButtonComponent } from "./like-button-component.js"
 import { posts, goToPage } from "../index.js"
 
 import { formatDistanceToNow } from "date-fns"
@@ -9,41 +10,6 @@ import { ru } from "date-fns/locale"
 
 
 export function renderPostsPageComponent(appEl) {
-  // Функция выводит часть вёрстки на случай обновления страницы как целиком, так и частично
-  const printLikesLine = (post) => {
-    const likeImg = post.isLiked ? "like-active" : "like-not-active"
-    const likeParts = []
-
-    let likesCount = post.likes.length
-
-    if (likesCount === 0)
-      likeParts.push("<i>никто не отметил фотографию, Вы можете быть первым</i>")
-    else {
-      if (post.isLiked) {
-        --likesCount
-
-        likeParts.push("<strong>Вам</strong>")
-
-        if (likesCount)
-          likeParts.push(" и ещё ")
-      }
-
-      if (likesCount) {
-        likeParts.push("<strong>")
-        likeParts.push(`${likesCount} ${likesCount.withUnitsInGrammaticalCase("пользователей", "пользователю", "пользователям")}`)
-        likeParts.push("</strong>")
-      }
-    }
-
-    return `
-      <button data-post-id="${post.id}" data-post-like="${Number(post.isLiked)}" class="like-button">
-        <img src="./assets/images/${likeImg}.svg" alt="heart"/>
-      </button>
-      <p class="post-likes-text">
-        Нравится: ${likeParts.join("")}
-      </p>`
-  }
-
   const printDeleteLink = (postId) => {
     return `<a href="#" class="post-delete" data-post-id="${postId}">Удалить</a>`
   }
@@ -70,9 +36,7 @@ export function renderPostsPageComponent(appEl) {
           </div>
 
           <div class="post-commands">
-            <div class="post-likes">
-              ${printLikesLine(post)}
-            </div>
+            <div class="post-likes" data-post-id="${post.id}"></div>
 
             <div class="right-side">
               ${printDeleteLink(post.id)}
@@ -102,23 +66,11 @@ export function renderPostsPageComponent(appEl) {
     })
   })
 
-  document.querySelectorAll(".like-button").forEach((element) => {
-    const listener = (event) => {
-      if (!knownUser.name)
-        return
+  document.querySelectorAll(".post-likes").forEach((element) => {
+    const filteredPosts = posts.filter((post) => post.id === element.dataset.postId)
 
-      const element = event.currentTarget
-
-      API.toggleLike(element.dataset.postId, element.dataset.postLike !== "1")
-        .then((post) => {
-          const parent = element.parentElement
-          parent.innerHTML = printLikesLine(post)
-
-          parent.querySelector(".like-button")?.addEventListener("click", listener)
-        })
-    }
-
-    element.addEventListener("click", listener)
+    if (filteredPosts)
+      renderLikeButtonComponent(element, filteredPosts[0])
   })
 
   // Удаление поста с простой анимацией
