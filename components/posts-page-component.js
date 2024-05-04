@@ -1,8 +1,7 @@
 import { routes } from "../routes.js"
-import { knownUser } from "../knownUser.js"
-import { API } from "../api.js"
 import { renderHeaderComponent } from "./header-component.js"
 import { renderLikeButtonComponent } from "./like-button-component.js"
+import { renderDeleteButtonComponent } from "./delete-link-component.js"
 import { posts, goToPage } from "../index.js"
 
 import { formatDistanceToNow } from "date-fns"
@@ -10,14 +9,6 @@ import { ru } from "date-fns/locale"
 
 
 export function renderPostsPageComponent(appEl) {
-  const printDeleteLink = (postId) => {
-    return `<a href="#" class="post-delete" data-post-id="${postId}">Удалить</a>`
-  }
-
-  const printDeleteLoader = () => {
-    return `<div class="loader-small"><div></div><div></div><div></div></div>`
-  }
-
   appEl.innerHTML = `
     <div class="page-container">
       <div class="header-container"></div>
@@ -37,10 +28,7 @@ export function renderPostsPageComponent(appEl) {
 
           <div class="post-commands">
             <div class="post-likes" data-post-id="${post.id}"></div>
-
-            <div class="right-side">
-              ${printDeleteLink(post.id)}
-            </div>
+            <div class="post-deletion" data-post-id="${post.id}"></div>
           </div>
 
           <p class="post-text">
@@ -73,66 +61,10 @@ export function renderPostsPageComponent(appEl) {
       renderLikeButtonComponent(element, filteredPosts[0])
   })
 
-  // Удаление поста с простой анимацией
-  document.querySelectorAll(".post-delete").forEach((element) => {
-    element.addEventListener("click", () => {
-      if (!knownUser.name)
-        return
+  document.querySelectorAll(".post-deletion").forEach((element) => {
+    const filteredPosts = posts.filter((post) => post.id === element.dataset.postId)
 
-      const parent = element.parentElement
-      parent.innerHTML = printDeleteLoader()
-
-      API.deletePost(element.dataset.postId)
-        .then((data) => {
-          let error
-
-          if (data.result === "ok" || data.error === (error = "Удалять посты с prod нельзя")) {
-            if (error) {
-              console.log(error)
-              console.log("Удаление поста на сервере не произошло, но для тестов показано, как будет выглядеть реальное удаление")
-            }
-
-            const selectorSpec = `data-post-id="${element.dataset.postId}"`
-            const listItem = document.querySelector(`li.post[${selectorSpec}]`)
-
-            document.querySelector(`div.post-image-container[${selectorSpec}]`).style.height = "0px"
-
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(listItem)
-              }, 500)
-            })
-          }
-          else
-            throw new Error(data.error)
-        })
-        .then((listItem) => {
-        //   const listItem = document.querySelector(`li.post[${selectorSpec}]`)
-          listItem.innerHTML = `<div class="post-deleted">..!ПОСТ УДАЛЁН!..</div>`
-          listItem.style.height = "130px";
-
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(listItem)
-            }, 3300)
-          })
-        })
-        .then((listItem) => {
-          listItem.style.height = "0";
-
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(listItem)
-            }, 250)
-          })
-        })
-        .then((listItem) => {
-          listItem.remove()
-        })
-        .catch((error) => {
-          parent.innerHTML = printDeleteLink(element.dataset.postId)
-          alert(error.message)
-        })
-    })
+    if (filteredPosts)
+      renderDeleteButtonComponent(element, filteredPosts[0])
   })
 }
