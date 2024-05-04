@@ -66,5 +66,6 @@ export function renderDeleteButtonComponent(element, post) {
     })
   }
 
-  render()
+  if (post.user.login === knownUser.login)
+    render()
 }
