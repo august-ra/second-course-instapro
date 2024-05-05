@@ -40,7 +40,7 @@ export function renderLikeButtonComponent(element, post) {
 
     likeButton?.addEventListener("click", () => {
       if (!knownUser.name)
-        return
+        return alert("Необходимо авторизоваться на сайте, чтобы иметь возможность отмечать посты как понравившиеся и писать собственные.")
 
       API.toggleLike(likeButton.dataset.postId, likeButton.dataset.postLike !== "1")
         .then((post) => {
