@@ -1,5 +1,5 @@
 /* 
-  Это стили Дизайн системы, сквозные стили для элементов интерфейса
+  Это стили Дизайн-системы, сквозные стили для элементов интерфейса
   всего приложения: шрифты, кнопки, инпуты и так далее
 */
 
@@ -20,22 +20,26 @@
 }
 
 html {
-  /* скрывает скролбары в firefox */
+  /* скрывает полосы прокрутки в firefox */
   scrollbar-width: none;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: StratosSkyeng;
+  font-family: "StratosSkyeng", sans-serif;
   overflow: auto;
   font-size: 14px;
   line-height: 18px;
 }
 
-/* скрывает скролбары в chrome */
+/* скрывает полосы прокрутки в chrome */
 body::-webkit-scrollbar {
   display: none;
+}
+
+textarea {
+  font-family: "StratosSkyeng", sans-serif;
 }
 
 p {
@@ -147,7 +151,7 @@ strong {
 }
 .loader div:nth-child(3) {
   left: 56px;
-  animation-delay: 0;
+  animation-delay: 0ms;
 }
 @keyframes loader {
   0% {
@@ -158,5 +162,43 @@ strong {
   100% {
     top: 24px;
     height: 32px;
+  }
+}
+
+.loader-small {
+  display: inline-block;
+  position: relative;
+  width: 52px;
+  height: 30px;
+}
+.loader-small div {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  width: 10px;
+  background: brown;
+  animation: loader-small 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.loader-small div:nth-child(1) {
+  right: 42px;
+  animation-delay: -0.24s;
+}
+.loader-small div:nth-child(2) {
+  right: 21px;
+  animation-delay: -0.12s;
+}
+.loader-small div:nth-child(3) {
+  right: 0;
+  animation-delay: 0ms;
+}
+@keyframes loader-small {
+  0% {
+    top: 0;
+    height: 30px;
+  }
+  50%,
+  100% {
+    top: 5px;
+    height: 20px;
   }
 }
