@@ -4,6 +4,9 @@ import { renderLikeButtonComponent } from "./like-button-component.js"
 import { renderDeleteButtonComponent } from "./delete-link-component.js"
 import { posts } from "../index.js"
 
+import { formatDistanceToNow } from "date-fns"
+import { ru } from "date-fns/locale"
+
 
 export function renderUserPostsPageComponent(appEl) {
   const printUserHeader = () => {
@@ -44,7 +47,7 @@ export function renderUserPostsPageComponent(appEl) {
           </p>
 
           <p class="post-date">
-            Вчера вечером
+            ${formatDistanceToNow(new Date(post.createdAt), {addSuffix: true, locale: ru})}
           </p>
         </li>`
       }).join("")}
