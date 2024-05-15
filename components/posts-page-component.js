@@ -37,7 +37,7 @@ export function renderPostsPageComponent(appEl) {
           </p>
 
           <p class="post-date">
-            ${formatDistanceToNow(new Date(post.createdAt), {addSuffix: true, locale: ru})}
+            ${formatDistanceToNow(new Date(post.createdAt), { addSuffix: true, locale: ru })}
           </p>
         </li>`
       }).join("")}
